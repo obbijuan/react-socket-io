@@ -1,13 +1,19 @@
 // Servidor de Express
-const app = require('express')();
+const express = require('express');
+const app = express();
 
 // Servidor de sockets
 const server = require('http').createServer(app);
 
+// Desplegar el directorio publico
+app.use( express.static( __dirname + '/public' ) )
+
 // Configuracion del socket server
 const io = require('socket.io')(server);
 
-io.on('connection', () => { /* … */ });
+io.on('connection', () => {
+    console.log('Cliente conectado!');
+});
 
 server.listen(8080, () => {
     console.log('Running Server on port 8080!');
