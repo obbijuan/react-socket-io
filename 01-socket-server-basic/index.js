@@ -11,8 +11,11 @@ app.use( express.static( __dirname + '/public' ) )
 // Configuracion del socket server
 const io = require('socket.io')(server);
 
-io.on('connection', () => {
-    console.log('Cliente conectado!');
+io.on('connection', ( socket ) => {
+    socket.emit('mensaje-bienvenida', {
+        msg: 'Bienvenido al server!',
+        date: new Date()
+    })
 });
 
 server.listen(8080, () => {
