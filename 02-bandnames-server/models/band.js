@@ -12,4 +12,4 @@ class Band {
 
 }
 
-module.export = Band;
+module.exports = Band;

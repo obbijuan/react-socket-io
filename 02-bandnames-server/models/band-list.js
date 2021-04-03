@@ -4,13 +4,13 @@ class BandList {
     
     constructor() {
 
-        this.bands = {
+        this.bands = [
             new Band('Pink Floyd'),
             new Band('Black Sabbath'),
             new Band('Deep Purple'),
             new Band('Led Zeppelin'),
             new Band('The Doors'),
-        }
+        ];
     }
 
     addBand(name) {
