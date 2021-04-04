@@ -30,7 +30,7 @@ class Sockets {
                 // this.io: Emite a todos los clientes conectados
                 this.io.emit( 'current-bands', this.bandList.getBands() );
             });
-
+            
             // Actualizar una banda
             socket.on('cambiar-nombre-banda', ({ id, name }) => {
                 this.bandList.changeName(id, name);
@@ -38,6 +38,13 @@ class Sockets {
                 this.io.emit( 'current-bands', this.bandList.getBands() );
             });
             
+            // crear una banda
+            socket.on('crear-banda', ({ name }) => {
+                this.bandList.addBand(name);
+                // this.io: Emite a todos los clientes conectados
+                this.io.emit( 'current-bands', this.bandList.getBands() );
+            });
+
         });
     }
 }
