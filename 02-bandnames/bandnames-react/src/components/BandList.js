@@ -11,6 +11,25 @@ export const BandList = ({ data }) => {
     }, [ data ])
 
 
+    const cambioNombre = ( event, id ) => {
+        const nuevoNombre = event.target.value;
+        
+        setBands( bands => bands.map( band =>{
+            if ( band.id === id ) {
+                band.name = nuevoNombre;
+            }
+            return band;
+        }));
+    }
+
+
+    const onPerdioFoco = (id, nombre) => {
+        console.log(id, nombre)
+        // TODO: Disparar el evento de sockets
+        
+    }
+
+
     const crearRows = () => {
 
         return(
@@ -24,9 +43,11 @@ export const BandList = ({ data }) => {
                         <input
                             className="form-control"
                             value={ band.name }
+                            onChange={ (event) => cambioNombre( event, band.id ) }
+                            onBlur={ () => onPerdioFoco( band.id, band.name ) }
                         />
                     </td>
-                    <td><h3> 15 </h3></td>
+                    <td><h3> { band.votes } </h3></td>
                     <td>
                     <button type="button" className="btn btn-danger">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
