@@ -1,18 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Chart } from 'chart.js'
+import { SocketContext } from '../context/SocketContext';
 
 export const BandChart = () => {
 
+    const { socket } = useContext(SocketContext);
+
     useEffect(() => {
+        socket.on( 'current-bands', ( bands ) => {
+            crearGrafica( bands );
+        });
+    }, [ socket ])
+    
+
+    const crearGrafica = ( bands = [] ) => {
 
         const ctx = document.getElementById('myChart');
         new Chart(ctx, {
             type: 'horizontalBar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: bands.map( band => band.name ),
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: bands.map( band => band.votes ),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -34,6 +44,7 @@ export const BandChart = () => {
             },
             options: {
                 animation: false,
+                events: ['click'],
                 scales: {
                     xAxes: [{
                         stacked: true
@@ -41,8 +52,8 @@ export const BandChart = () => {
                 }
             }
         });
-        
-    }, [])
+
+    }
 
 
 
