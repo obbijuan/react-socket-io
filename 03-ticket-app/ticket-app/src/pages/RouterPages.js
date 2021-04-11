@@ -13,7 +13,7 @@ import {
     Link,
     Redirect
   } from 'react-router-dom';
-import { Login } from './Login';
+import { Register } from './Register';
 import { Queue } from './Queue';
 import { CreateTicket } from './CreateTicket';
 import { Desk } from './Desk';
@@ -24,22 +24,22 @@ export const RouterPages = () => {
     return (
         <Router>
             <Layout style={{ height: '100vh'}}>
-                <Sider>
+                <Sider collapsible="true" breakpoint="sm">
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
-                            <Link to="/login">
-                                Login
+                            <Link to="/register">
+                                Register
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                             <Link to="/queue">
-                                Cola de Ticets
+                                Ticket Queue
                             </Link>
                         </Menu.Item>
                         <Menu.Item key="3" icon={<UploadOutlined />}>
                             <Link to="/create">
-                                Crear Tickets
+                                Create Tickets
                             </Link>
                         </Menu.Item>
                     </Menu>
@@ -54,12 +54,12 @@ export const RouterPages = () => {
                         }}
                     >
                         <Switch>
-                            <Route path="/login" component={ Login } />
+                            <Route path="/register" component={ Register } />
                             <Route path="/queue" component={ Queue } />
                             <Route path="/create" component={ CreateTicket } />
                             <Route path="/desk" component={ Desk } />
 
-                            <Redirect to="/login" />
+                            <Redirect to="/register" />
                         </Switch>
                     </Content>
                 </Layout>
