@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const Entry = () => {
+export const Login = () => {
     return (
         <div>
-            Entry Page
+            Login Page
         </div>
     )
 }
