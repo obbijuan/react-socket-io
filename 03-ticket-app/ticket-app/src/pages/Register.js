@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Input, Button, InputNumber, Typography, Divider } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
+
 import { useHideMenu } from '../hooks/useHideMenu';
+import { getUsuarioStorage } from '../helpers/getUsuarioStorage';
 
 const { Title, Text } = Typography;
 
@@ -25,17 +27,24 @@ const tailLayout = {
 export const Register = () => {
 
     const history = useHistory();
+    const [ user ] = useState( getUsuarioStorage() );
+
     useHideMenu(false);
 
-    const onFinish = (values) => {
-        console.log('Success:', values);
-
+    const onFinish = ({ username, desk }) => {
+        
+        localStorage.setItem('agent', username);
+        localStorage.setItem('desk', desk);
         history.push('/desk');
     };
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
+
+    if ( user.agent && user.desk ) {
+        return <Redirect to="/desk" />
+    }
 
 
     return (
