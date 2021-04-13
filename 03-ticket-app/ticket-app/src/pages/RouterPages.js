@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Layout, Menu } from 'antd';
 import {
   UserOutlined,
@@ -17,14 +17,22 @@ import { Register } from './Register';
 import { Queue } from './Queue';
 import { CreateTicket } from './CreateTicket';
 import { Desk } from './Desk';
+import { UiContext } from '../context/UiContext';
 
 const { Sider, Content } = Layout;
 
 export const RouterPages = () => {
+
+    const { ocultarMenu } = useContext(UiContext);
+
     return (
         <Router>
             <Layout style={{ height: '100vh'}}>
-                <Sider collapsible="true" breakpoint="sm">
+                <Sider
+                    collapsible="true"
+                    breakpoint="sm"
+                    hidden={ ocultarMenu }
+                >
                     <div className="logo" />
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                         <Menu.Item key="1" icon={<UserOutlined />}>
