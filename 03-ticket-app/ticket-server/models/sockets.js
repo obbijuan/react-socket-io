@@ -25,6 +25,14 @@ class Sockets {
                 callback( newTicket );
 
             });
+
+            socket.on('work-next-ticket', ( user, callback ) => {
+                
+                const { agent, desk } = user;
+                const yourTicket = this.ticketList.asignarTicket( agent, desk );
+                callback( yourTicket );
+
+            });
             
         
         });
