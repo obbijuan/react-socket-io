@@ -31,7 +31,8 @@ class Sockets {
                 const { agent, desk } = user;
                 const yourTicket = this.ticketList.asignarTicket( agent, desk );
                 callback( yourTicket );
-
+                
+                this.io.emit('assigned-ticket', this.ticketList.ultimos13);
             });
             
         
