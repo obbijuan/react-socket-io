@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Col, Row, Typography, List, Card, Tag, Divider } from 'antd';
 import { useHideMenu } from '../hooks/useHideMenu';
 import { SocketContext } from '../context/SocketContext';
+import { getLatest } from '../helpers/getLatest';
 
 const { Title, Text } = Typography;
 
@@ -23,6 +24,14 @@ export const Queue = () => {
             socket.off('assigned-ticket');
         }
     }, [ socket ])
+
+
+    useEffect(() => {
+        
+        getLatest().then( tickets => setTickets( tickets ));
+
+    }, [])
+
 
     return (
         <>
