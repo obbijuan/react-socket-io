@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
-require('dotenv').config();
+import React from 'react';
+import { useMapbox } from '../hooks/useMapbox';
 
-
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const initPoint = {
     lng: -70.6410,
@@ -13,40 +10,7 @@ const initPoint = {
 
 export const MapPage = () => {
 
-    const mapDiv = useRef();
-    // const [ map, setMap ] = useState();
-    const map = useRef();
-    const [ coords, setCoords ] = useState(initPoint)
-
-
-    useEffect(() => {
-        
-        const mapbox = new mapboxgl.Map({
-            container: mapDiv.current,
-            style: 'mapbox://styles/mapbox/streets-v11',
-            center: [ initPoint.lng, initPoint.lat ],
-            zoom: initPoint.zoom
-        });
-        
-        map.current = mapbox;
-
-    }, []);
-
-
-
-    // Se dispara cuando se mueve el mapa
-    useEffect(() => {
-
-        map.current?.on('move', () => {
-            const { lng, lat } = map.current.getCenter();
-            setCoords({
-                lng: lng.toFixed(4),
-                lat: lat.toFixed(4),
-                zoom: map.current.getZoom().toFixed(2),
-            });
-        })
-
-    }, []);
+    const { setRef, coords } = useMapbox( initPoint );
 
 
     return (
@@ -55,7 +19,7 @@ export const MapPage = () => {
                 Lng: { coords.lng } | lat: { coords.lat } | zoom: { coords.zoom }
             </div>
             <div
-                ref={ mapDiv }
+                ref={ setRef }
                 className="mapContainer"
             />
         </>
