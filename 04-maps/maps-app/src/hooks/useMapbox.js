@@ -50,6 +50,7 @@ export const useMapbox = ( initPoint ) => {
         marker.on('drag', ({ target }) => {
             const { id } = target;
             const { lng, lat } = target.getLngLat();
+            markerMovement.current.next({ id, lng, lat });
 
         })
 
@@ -100,6 +101,7 @@ export const useMapbox = ( initPoint ) => {
         coords,
         objMarkers,
         newMarker$: newMarker.current,
+        markerMovement$: markerMovement.current,
         setRef
     }
 }
