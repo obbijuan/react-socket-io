@@ -34,6 +34,13 @@ export const useMapbox = ( initPoint ) => {
             .setDraggable( true );
 
         objMarkers.current[ marker.id ] = marker;
+        
+        // Movimientos del marcador
+        marker.on('drag', ({ target }) => {
+            const { id } = target;
+            const { lng, lat } = target.getLngLat();
+
+        })
 
     },[])
 
