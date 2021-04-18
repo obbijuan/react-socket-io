@@ -19,6 +19,23 @@ export const useMapbox = ( initPoint ) => {
 
     const map = useRef();
     const [ coords, setCoords ] = useState( initPoint );
+    
+
+    // Funcion para agregar marcadores
+    const addMarker = useCallback((ev) => {
+
+        const { lng, lat } = ev.lngLat;
+        const marker = new mapboxgl.Marker();
+
+        marker.id = v4();
+        marker
+            .setLngLat([ lng, lat ])
+            .addTo( map.current )
+            .setDraggable( true );
+
+        objMarkers.current[ marker.id ] = marker;
+
+    },[])
 
 
     useEffect(() => {
@@ -54,23 +71,14 @@ export const useMapbox = ( initPoint ) => {
     // Agregar marcadores al hacer click
     useEffect(() => {
 
-        map.current?.on('click', (ev) => {
-            const { lng, lat } = ev.lngLat;
-            const marker = new mapboxgl.Marker();
+        map.current?.on('click', addMarker );
 
-            marker.id = v4();
-            marker
-                .setLngLat([lng, lat])
-                .addTo( map.current )
-                .setDraggable( true );
+    }, [addMarker])
 
-            objMarkers.current[ marker.id ] = marker;
-            console.log(objMarkers.current)
-        })
 
-    }, [])
 
     return {
+        addMarker,
         coords,
         objMarkers,
         setRef
