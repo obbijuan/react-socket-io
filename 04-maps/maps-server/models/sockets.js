@@ -16,11 +16,13 @@ class Sockets {
         // On connection
         this.io.on('connection', ( socket ) => {
 
-            console.log('Cliente conectado!')
-
-            // TODO: marker-actives
-
-            // TODO: marker-new
+            socket.emit('marker-actives', this.markers.actives);
+            
+            socket.on('marker-new', (marker) => {
+                this.markers.addMarker(marker);
+                // Emite a todos los clientes
+                socket.broadcast.emit('marker-new', marker);
+            });
 
             // TODO: marker-update
             
