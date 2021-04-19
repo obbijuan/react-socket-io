@@ -46,9 +46,9 @@ export const MapPage = () => {
     // Escuchar nuevos marcadores
     useEffect(() => {
         socket.on('marker-new', (marker) => {
-            console.log(marker);
+            addMarker(marker, marker.id);
         });
-    }, [socket]);
+    }, [socket, addMarker]);
 
 
     return (
