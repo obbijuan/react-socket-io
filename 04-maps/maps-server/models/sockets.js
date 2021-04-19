@@ -16,6 +16,8 @@ class Sockets {
         // On connection
         this.io.on('connection', ( socket ) => {
 
+            console.log('Cliente conectado!')
+
             // TODO: marker-actives
 
             // TODO: marker-new
