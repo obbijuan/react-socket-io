@@ -27,24 +27,26 @@ export const useMapbox = ( initPoint ) => {
     
 
     // Funcion para agregar marcadores
-    const addMarker = useCallback((ev) => {
+    const addMarker = useCallback((ev, id) => {
 
-        const { lng, lat } = ev.lngLat;
+        const { lng, lat } = ev.lngLat || ev;
         const marker = new mapboxgl.Marker();
 
-        marker.id = v4();
+        marker.id = id || v4();
         marker
             .setLngLat([ lng, lat ])
             .addTo( map.current )
             .setDraggable( true );
 
         objMarkers.current[ marker.id ] = marker;
-        
-        newMarker.current.next({
-            id: marker.id,
-            lng, 
-            lat
-        })
+
+        if ( !id ) {
+            newMarker.current.next({
+                id: marker.id,
+                lng, 
+                lat
+            })
+        }
         
         // Movimientos del marcador
         marker.on('drag', ({ target }) => {
