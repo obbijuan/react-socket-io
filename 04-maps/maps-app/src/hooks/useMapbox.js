@@ -15,7 +15,7 @@ export const useMapbox = ( initPoint ) => {
         mapDiv.current = node;
     }, []);
 
-
+    // Referencia a los marcadores
     const objMarkers = useRef({});
 
     // Observables de Rxjs
@@ -56,7 +56,14 @@ export const useMapbox = ( initPoint ) => {
 
         })
 
+    }, [])
+    
+
+    // Funcion para actualizar la ubicación del marcador
+    const updatePosition = useCallback( ({ id, lng, lat }) => {
+        objMarkers.current[id].setLngLat([ lng, lat ]);
     },[])
+
 
 
     useEffect(() => {
@@ -100,6 +107,7 @@ export const useMapbox = ( initPoint ) => {
 
     return {
         addMarker,
+        updatePosition,
         coords,
         objMarkers,
         newMarker$: newMarker.current,
