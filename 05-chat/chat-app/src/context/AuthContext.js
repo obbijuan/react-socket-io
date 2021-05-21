@@ -32,13 +32,13 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthProvider.Provider value={{
+        <AuthContext.Provider value={{
             login,
             register,
             verifyToken,
             logout,
         }}>
             { children }
-        </AuthProvider.Provider>
+        </AuthContext.Provider>
     )
 }
