@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async(nombre, email, password) => {
 
-        const resp = await fetchWithToken('login/new', { nombre, email, password }, 'POST');
+        const resp = await fetchWithoutToken('login/new', { nombre, email, password }, 'POST');
 
         if ( resp.ok ) {
             localStorage.setItem('token', resp.token );
@@ -56,7 +56,6 @@ export const AuthProvider = ({ children }) => {
         }
 
         return resp.msg;
-
     }
 
     const verifyToken = useCallback(() => {
