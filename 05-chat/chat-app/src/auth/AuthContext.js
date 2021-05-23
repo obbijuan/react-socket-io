@@ -1,5 +1,5 @@
 import React, { createContext, useCallback, useState } from 'react';
-import { fetchWithoutToken } from '../helpers/fetch';
+import { fetchWithoutToken, fetchWithToken } from '../helpers/fetch';
 
 export const AuthContext = createContext();
 
@@ -36,7 +36,26 @@ export const AuthProvider = ({ children }) => {
         return resp.ok;
     }
 
-    const register = (nombre, email, password) => {
+    const register = async(nombre, email, password) => {
+
+        const resp = await fetchWithToken('login/new', { nombre, email, password }, 'POST');
+
+        if ( resp.ok ) {
+            localStorage.setItem('token', resp.token );
+            const { usuario } = resp;
+
+            setAuth({
+                uid: usuario.uid,
+                checking: false,
+                logged: true,
+                name: usuario.nombre,
+                email: usuario.email,
+            });
+
+            return true;
+        }
+
+        return resp.msg;
 
     }
 
