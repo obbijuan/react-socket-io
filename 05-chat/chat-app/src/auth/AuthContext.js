@@ -58,7 +58,50 @@ export const AuthProvider = ({ children }) => {
         return resp.msg;
     }
 
-    const verifyToken = useCallback(() => {
+    const verifyToken = useCallback( async() => {
+
+        const token = localStorage.getItem('token');
+        // Si token no existe
+        if ( !token ) {
+            setAuth({
+                uid: null,
+                checking: false,
+                logged: false,
+                name: null,
+                email: null,
+            })
+
+            return false;
+        }
+
+        const resp = await fetchWithToken('login/renew');
+        console.log(resp)
+        if ( resp.ok ) {
+            localStorage.setItem('token', resp.token );
+            const { usuario } = resp;
+
+            setAuth({
+                uid: usuario.uid,
+                checking: false,
+                logged: true,
+                name: usuario.nombre,
+                email: usuario.email,
+            });
+
+            return true;
+
+        } else {
+            setAuth({
+                uid: null,
+                checking: false,
+                logged: false,
+                name: null,
+                email: null,
+            });
+
+            return false;
+        }
+
 
     },[])
 
