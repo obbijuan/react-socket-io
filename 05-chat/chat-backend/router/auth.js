@@ -35,7 +35,7 @@ router.post('/', [
 
 
 // Revalidar Token
-router.post('/renew', [ validateJWT ], renewToken);
+router.get('/renew', [ validateJWT ], renewToken);
 
 
 
