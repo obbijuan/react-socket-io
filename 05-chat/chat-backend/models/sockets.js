@@ -1,3 +1,4 @@
+const { checkJWT } = require("../helpers/jwt");
 
 
 class Sockets {
@@ -13,7 +14,14 @@ class Sockets {
         // On connection
         this.io.on('connection', ( socket ) => {
 
-            console.log('Cliente Conectado!')
+            const [ valid, uid ] = checkJWT( socket.handshake.query['x-token'] );
+
+            if ( !valid ) {
+                console.log('Socket no identificado!')
+                return socket.disconnect();
+            }
+
+            console.log('Cliente Conectado!', uid)
 
             // TODO: Validar el JWT
             // Si el token no es valido, desconectar
@@ -31,6 +39,9 @@ class Sockets {
             // Marcar en la BD que el usuario se desconecto
             
             // TODO: Emitir todos los usuarios conectados
+            socket.on('disconnect', () => {
+                console.log('Cliente Desconectado!', uid)
+            })
             
         
         });
