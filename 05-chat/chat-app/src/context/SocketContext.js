@@ -33,10 +33,10 @@ export const SocketProvider = ({ children }) => {
     // Escuchar los cambios en los usuarios conectados
     useEffect(() => {
         
-        socket?.on('users-list', ( users ) => {
+        socket?.on('users-list', ( usuarios ) => {
             dispatch({
                 type: types.loadUsers,
-                payload: users
+                payload: usuarios
             })
         })
 
