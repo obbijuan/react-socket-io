@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react';
+
+import { AuthContext } from '../auth/AuthContext';
+import { ChatContext } from '../context/chat/ChatContext';
+import { SocketContext } from '../context/SocketContext';
 
 export const SendMessage = () => {
 
     const [message, setMessage] = useState('');
+    const { socket } = useContext( SocketContext );
+    const { auth } = useContext( AuthContext );
+    const { chatState } = useContext( ChatContext );
 
     const onChange = ({ target }) => {
         setMessage( target.value );
@@ -11,11 +18,16 @@ export const SendMessage = () => {
     const onSubmit = (ev) => {
 
         ev.preventDefault();
-        
+
         if (message.length === 0) { return; }
         setMessage('');
 
         // TODO: Emitir un evento de sockets para enviar el mensaje
+        socket.emit('private-message', {
+            de: auth.uid,
+            para: chatState.chatActivo,
+            mensaje: message
+        })
 
         // TODO: Hacer el dispatch del mensaje
 

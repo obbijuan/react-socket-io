@@ -23,7 +23,9 @@ class Sockets {
             }
 
             const user = await userConnect(uid);
-            console.log('Se conectó', user.nombre)
+            
+            // Unir al usuario a una sala de socket.io
+            socket.join( uid );
 
             // TODO: Validar el JWT
             // Si el token no es valido, desconectar
@@ -36,7 +38,9 @@ class Sockets {
             // TODO: Socket join, uid
 
             // TODO: Escuchar cuando el cliente manda un mensaje
-            // mensaje-personal
+            socket.on('private-message', (payload) => {
+                console.log(payload)
+            })
 
             // TODO: Disconnect
             // Marcar en la BD que el usuario se desconecto
