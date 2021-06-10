@@ -32,6 +32,7 @@ const saveMessage = async (payload) => {
     try {
         const message = new Message(payload);
         await message.save();
+        
         return message;
 
     } catch (error) {

@@ -38,10 +38,11 @@ class Sockets {
             // TODO: Socket join, uid
 
             // TODO: Escuchar cuando el cliente manda un mensaje
-            socket.on('private-message', async(payload) => {
+            socket.on('private-message', async (payload) => {
                 const message = await saveMessage(payload);
-                console.log(message);
-            })
+                this.io.to(payload.para).emit('private-message', message);
+                this.io.to(payload.de).emit('private-message', message);
+            });
 
             // TODO: Disconnect
             // Marcar en la BD que el usuario se desconecto
